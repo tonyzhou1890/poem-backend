@@ -154,4 +154,36 @@
 ```
 
 ## 关键字查询——作者、标题、内容
-
+1. 方式：get
+2. 请求参数
+```
+{
+  "keyword": "李白",
+  "type": "all",  // "all","author","title","content"
+  "p": 1  // 可选，当type不是all时必填
+}
+```
+3. 响应数据
+```
+{
+  "code": 0,
+  "errorMsg": "",
+  "data": {
+    "author": {
+      "total": "1269",
+      "limit": 20,
+      "data": [...]
+    },
+    "title": {
+      "total": "46",
+      "limit": 20,
+      "data": [...]
+    },
+    "content": {
+      "total": "272",
+      "limit": 20,
+      "data": [...]
+    }
+  }
+}
+```
