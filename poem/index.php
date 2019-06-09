@@ -97,22 +97,35 @@ if (isset($_GET["home"])) { // 首页
 }
 
 // 首页请求
+// function home() {
+//   // 随机诗词
+//   $poems = random_poem();
+//   // 所有作者
+//   $author = get_author();
+//   // 随机20名作者
+//   $author_keys = array_rand($author,20);
+//   $authors = [];
+//   foreach($author_keys as $key => $val){
+//     $authors[] = $author[$val];
+//   }
+//   $result = new StdClass();
+//   $result -> poems = $poems;
+//   $result -> authors = $authors;
+//   printResult(0, $result);
+// }
 function home() {
-  // 随机诗词
-  $poems = random_poem();
-  // 所有作者
-  $author = get_author();
-  // 随机20名作者
-  $author_keys = array_rand($author,20);
-  $authors = [];
-  foreach($author_keys as $key => $val){
-    $authors[] = $author[$val];
+  $poem_sql = "SELECT _id, mingcheng, zuozhe, zhaiyao FROM poem LIMIT 10";
+    $poem_result_array = commonQuery($poem_sql);
+    $author_result_array = commonQuery("SELECT xingming FROM author LIMIT 20");
+    foreach($author_result_array as $key=>$val){
+    $author_result_array[$key] = $author_result_array[$key]["xingming"];
   }
   $result = new StdClass();
-  $result -> poems = $poems;
-  $result -> authors = $authors;
+  $result -> poems = $poem_result_array;
+  $result -> authors = $author_result_array;
   printResult(0, $result);
 }
+
 
 // 随机十篇诗
 function random_poem(){
